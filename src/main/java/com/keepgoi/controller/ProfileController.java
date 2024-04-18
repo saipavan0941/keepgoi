@@ -3,6 +3,7 @@ package com.keepgoi.controller;
 import java.net.http.HttpRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +21,8 @@ public class ProfileController {
 	ProfileService profileService;
 	
 	@GetMapping("/myProfile")
-	public Profile getMyprofile(HttpRequest httpRequest) {
-		return profileService.getMyprofile(httpRequest);
+	public Profile getMyprofile(Authentication authentication) {
+		return profileService.getMyprofile(authentication);
 	}
 	
 	@GetMapping("/register")

@@ -9,7 +9,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 
 	@ExceptionHandler(SignUpException.class)
-	public ResponseEntity<String> handleResourceNotFoundException(SignUpException ex) {
+	public ResponseEntity<String> handleSignUpException(SignUpException ex) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+	}
+	
+	@ExceptionHandler(SignInException.class)
+	public ResponseEntity<String> handleLoginException(SignInException ex) {
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
 	}
 }
