@@ -1,15 +1,27 @@
 package com.keepgoi.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
+import com.keepgoi.model.User;
+import com.keepgoi.repo.UserRepository;
+
+@Service
 public class MyUserDetailsService implements UserDetailsService{
 
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	 @Autowired
+	 private UserRepository userRepository;
+
+	    @Override
+	    public UserDetails loadUserByUsername(String username) {
+	        User user = userRepository.findByMobileNumber(username);
+	        if (user == null) {
+	            throw new UsernameNotFoundException(username);
+	        }
+	        return new MyUserDetails(user);
+	    }
 
 }
