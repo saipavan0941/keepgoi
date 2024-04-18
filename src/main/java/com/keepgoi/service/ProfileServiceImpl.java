@@ -112,16 +112,6 @@ public class ProfileServiceImpl implements ProfileService {
 		return false;
 	}
 
-	public void sendSMS(String phoneNumber, String message) {
-		try {
-			Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
-			Message.creator(new PhoneNumber(phoneNumber), new PhoneNumber(TWILIO_PHONE_NUMBER), message).create();
-			// If the message SID is not null, the SMS was sent successfully
-		} catch (Exception e) {
-			throw new SignInException("error while sending OTP");
-		}
-	}
-
 	@Override
 	public boolean sendSMS(SMSLogin smsLogin) {
 		int number = (int) Math.random();
@@ -132,7 +122,6 @@ public class ProfileServiceImpl implements ProfileService {
 			Message msg=Message.creator(new PhoneNumber(smsLogin.getMobile()), new PhoneNumber(TWILIO_PHONE_NUMBER), getSMSBody).create();
 			if(msg.getSid()!=null) otpMap.put(smsLogin.getMobile(), otp);
 			return msg.getSid()!=null;
-			// If the message SID is not null, the SMS was sent successfully
 		} catch (Exception e) {
 			return false;
 		}
